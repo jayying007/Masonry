@@ -8,8 +8,8 @@
 #import "MASConstraint.h"
 #import "MASConstraint+Private.h"
 
-#define MASMethodNotImplemented() \
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException \
+#define MASMethodNotImplemented()                                                                                                        \
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException                                                               \
                                    reason:[NSString stringWithFormat:@"You must override %@ in a subclass.", NSStringFromSelector(_cmd)] \
                                  userInfo:nil]
 
@@ -18,19 +18,13 @@
 #pragma mark - Init
 
 - (id)init {
-	NSAssert(![self isMemberOfClass:[MASConstraint class]], @"MASConstraint is an abstract class, you should not instantiate it directly.");
-	return [super init];
+    NSAssert(![self isMemberOfClass:[MASConstraint class]], @"MASConstraint is an abstract class, you should not instantiate it directly.");
+    return [super init];
 }
 
 #pragma mark - NSLayoutRelation proxies
 
 - (MASConstraint * (^)(id))equalTo {
-    return ^id(id attribute) {
-        return self.equalToWithRelation(attribute, NSLayoutRelationEqual);
-    };
-}
-
-- (MASConstraint * (^)(id))mas_equalTo {
     return ^id(id attribute) {
         return self.equalToWithRelation(attribute, NSLayoutRelationEqual);
     };
@@ -42,19 +36,7 @@
     };
 }
 
-- (MASConstraint * (^)(id))mas_greaterThanOrEqualTo {
-    return ^id(id attribute) {
-        return self.equalToWithRelation(attribute, NSLayoutRelationGreaterThanOrEqual);
-    };
-}
-
 - (MASConstraint * (^)(id))lessThanOrEqualTo {
-    return ^id(id attribute) {
-        return self.equalToWithRelation(attribute, NSLayoutRelationLessThanOrEqual);
-    };
-}
-
-- (MASConstraint * (^)(id))mas_lessThanOrEqualTo {
     return ^id(id attribute) {
         return self.equalToWithRelation(attribute, NSLayoutRelationLessThanOrEqual);
     };
@@ -63,21 +45,21 @@
 #pragma mark - MASLayoutPriority proxies
 
 - (MASConstraint * (^)(void))priorityLow {
-    return ^id{
+    return ^id {
         self.priority(MASLayoutPriorityDefaultLow);
         return self;
     };
 }
 
 - (MASConstraint * (^)(void))priorityMedium {
-    return ^id{
+    return ^id {
         self.priority(MASLayoutPriorityDefaultMedium);
         return self;
     };
 }
 
 - (MASConstraint * (^)(void))priorityHigh {
-    return ^id{
+    return ^id {
         self.priority(MASLayoutPriorityDefaultHigh);
         return self;
     };
@@ -86,14 +68,14 @@
 #pragma mark - NSLayoutConstraint constant proxies
 
 - (MASConstraint * (^)(MASEdgeInsets))insets {
-    return ^id(MASEdgeInsets insets){
+    return ^id(MASEdgeInsets insets) {
         self.insets = insets;
         return self;
     };
 }
 
 - (MASConstraint * (^)(CGFloat))inset {
-    return ^id(CGFloat inset){
+    return ^id(CGFloat inset) {
         self.inset = inset;
         return self;
     };
@@ -114,7 +96,7 @@
 }
 
 - (MASConstraint * (^)(CGFloat))offset {
-    return ^id(CGFloat offset){
+    return ^id(CGFloat offset) {
         self.offset = offset;
         return self;
     };
@@ -126,11 +108,6 @@
         [self setLayoutConstantWithValue:offset];
         return self;
     };
-}
-
-- (MASConstraint * (^)(id offset))mas_offset {
-    // Will never be called due to macro
-    return nil;
 }
 
 #pragma mark - NSLayoutConstraint constant setter
@@ -260,38 +237,60 @@
 
 #pragma mark - Abstract
 
-- (MASConstraint * (^)(CGFloat multiplier))multipliedBy { MASMethodNotImplemented(); }
+- (MASConstraint * (^)(CGFloat multiplier))multipliedBy {
+    MASMethodNotImplemented();
+}
 
-- (MASConstraint * (^)(CGFloat divider))dividedBy { MASMethodNotImplemented(); }
+- (MASConstraint * (^)(CGFloat divider))dividedBy {
+    MASMethodNotImplemented();
+}
 
-- (MASConstraint * (^)(MASLayoutPriority priority))priority { MASMethodNotImplemented(); }
+- (MASConstraint * (^)(MASLayoutPriority priority))priority {
+    MASMethodNotImplemented();
+}
 
-- (MASConstraint * (^)(id, NSLayoutRelation))equalToWithRelation { MASMethodNotImplemented(); }
+- (MASConstraint * (^)(id, NSLayoutRelation))equalToWithRelation {
+    MASMethodNotImplemented();
+}
 
-- (MASConstraint * (^)(id key))key { MASMethodNotImplemented(); }
+- (MASConstraint * (^)(id key))key {
+    MASMethodNotImplemented();
+}
 
-- (void)setInsets:(MASEdgeInsets __unused)insets { MASMethodNotImplemented(); }
+- (void)setInsets:(MASEdgeInsets __unused)insets {
+    MASMethodNotImplemented();
+}
 
-- (void)setInset:(CGFloat __unused)inset { MASMethodNotImplemented(); }
+- (void)setInset:(CGFloat __unused)inset {
+    MASMethodNotImplemented();
+}
 
-- (void)setSizeOffset:(CGSize __unused)sizeOffset { MASMethodNotImplemented(); }
+- (void)setSizeOffset:(CGSize __unused)sizeOffset {
+    MASMethodNotImplemented();
+}
 
-- (void)setCenterOffset:(CGPoint __unused)centerOffset { MASMethodNotImplemented(); }
+- (void)setCenterOffset:(CGPoint __unused)centerOffset {
+    MASMethodNotImplemented();
+}
 
-- (void)setOffset:(CGFloat __unused)offset { MASMethodNotImplemented(); }
+- (void)setOffset:(CGFloat __unused)offset {
+    MASMethodNotImplemented();
+}
 
-#if TARGET_OS_MAC && !(TARGET_OS_IPHONE || TARGET_OS_TV)
+- (void)activate {
+    MASMethodNotImplemented();
+}
 
-- (MASConstraint *)animator { MASMethodNotImplemented(); }
+- (void)deactivate {
+    MASMethodNotImplemented();
+}
 
-#endif
+- (void)install {
+    MASMethodNotImplemented();
+}
 
-- (void)activate { MASMethodNotImplemented(); }
-
-- (void)deactivate { MASMethodNotImplemented(); }
-
-- (void)install { MASMethodNotImplemented(); }
-
-- (void)uninstall { MASMethodNotImplemented(); }
+- (void)uninstall {
+    MASMethodNotImplemented();
+}
 
 @end

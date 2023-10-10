@@ -150,7 +150,6 @@
 
 #endif
 
-
 /**
  *	Sets the constraint debug name
  */
@@ -192,15 +191,7 @@
  */
 - (void)setOffset:(CGFloat)offset;
 
-
 // NSLayoutConstraint Installation support
-
-#if TARGET_OS_MAC && !(TARGET_OS_IPHONE || TARGET_OS_TV)
-/**
- *  Whether or not to go through the animator proxy when modifying the constraint
- */
-@property (nonatomic, copy, readonly) MASConstraint *animator;
-#endif
 
 /**
  *  Activates an NSLayoutConstraint if it's supported by an OS. 
@@ -225,44 +216,12 @@
 
 @end
 
-
-/**
- *  Convenience auto-boxing macros for MASConstraint methods.
- *
- *  Defining MAS_SHORTHAND_GLOBALS will turn on auto-boxing for default syntax.
- *  A potential drawback of this is that the unprefixed macros will appear in global scope.
- */
-#define mas_equalTo(...)                 equalTo(MASBoxValue((__VA_ARGS__)))
-#define mas_greaterThanOrEqualTo(...)    greaterThanOrEqualTo(MASBoxValue((__VA_ARGS__)))
-#define mas_lessThanOrEqualTo(...)       lessThanOrEqualTo(MASBoxValue((__VA_ARGS__)))
-
-#define mas_offset(...)                  valueOffset(MASBoxValue((__VA_ARGS__)))
-
-
 #ifdef MAS_SHORTHAND_GLOBALS
 
-#define equalTo(...)                     mas_equalTo(__VA_ARGS__)
-#define greaterThanOrEqualTo(...)        mas_greaterThanOrEqualTo(__VA_ARGS__)
-#define lessThanOrEqualTo(...)           mas_lessThanOrEqualTo(__VA_ARGS__)
+#define equalTo(...) equalTo(MASBoxValue((__VA_ARGS__)))
+#define greaterThanOrEqualTo(...) greaterThanOrEqualTo(MASBoxValue((__VA_ARGS__)))
+#define lessThanOrEqualTo(...) lessThanOrEqualTo(MASBoxValue((__VA_ARGS__)))
 
-#define offset(...)                      mas_offset(__VA_ARGS__)
+#define offset(...) valueOffset(MASBoxValue((__VA_ARGS__)))
 
 #endif
-
-
-@interface MASConstraint (AutoboxingSupport)
-
-/**
- *  Aliases to corresponding relation methods (for shorthand macros)
- *  Also needed to aid autocompletion
- */
-- (MASConstraint * (^)(id attr))mas_equalTo;
-- (MASConstraint * (^)(id attr))mas_greaterThanOrEqualTo;
-- (MASConstraint * (^)(id attr))mas_lessThanOrEqualTo;
-
-/**
- *  A dummy method to aid autocompletion
- */
-- (MASConstraint * (^)(id offset))mas_offset;
-
-@end

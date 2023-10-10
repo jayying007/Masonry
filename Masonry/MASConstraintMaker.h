@@ -24,9 +24,9 @@ typedef NS_OPTIONS(NSInteger, MASAttribute) {
 
     MASAttributeFirstBaseline = 1 << NSLayoutAttributeFirstBaseline,
     MASAttributeLastBaseline = 1 << NSLayoutAttributeLastBaseline,
-    
+
 #if TARGET_OS_IPHONE || TARGET_OS_TV
-    
+
     MASAttributeLeftMargin = 1 << NSLayoutAttributeLeftMargin,
     MASAttributeRightMargin = 1 << NSLayoutAttributeRightMargin,
     MASAttributeTopMargin = 1 << NSLayoutAttributeTopMargin,
@@ -37,7 +37,7 @@ typedef NS_OPTIONS(NSInteger, MASAttribute) {
     MASAttributeCenterYWithinMargins = 1 << NSLayoutAttributeCenterYWithinMargins,
 
 #endif
-    
+
 };
 
 /**
@@ -84,7 +84,7 @@ typedef NS_OPTIONS(NSInteger, MASAttribute) {
  *  to the makers associated view and children corresponding to the set bits in the
  *  MASAttribute parameter. Combine multiple attributes via binary-or.
  */
-@property (nonatomic, strong, readonly) MASConstraint *(^attributes)(MASAttribute attrs);
+@property (nonatomic, strong, readonly) MASConstraint * (^attributes)(MASAttribute attrs);
 
 /**
  *	Creates a MASCompositeConstraint with type MASCompositeConstraintTypeEdges
@@ -132,7 +132,5 @@ typedef NS_OPTIONS(NSInteger, MASAttribute) {
  *	@return	an array of all the installed MASConstraints
  */
 - (NSArray *)install;
-
-- (MASConstraint * (^)(dispatch_block_t))group;
 
 @end

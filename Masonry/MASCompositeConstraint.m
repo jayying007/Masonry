@@ -20,7 +20,8 @@
 
 - (id)initWithChildren:(NSArray *)children {
     self = [super init];
-    if (!self) return nil;
+    if (!self)
+        return nil;
 
     _childConstraints = [children mutableCopy];
     for (MASConstraint *constraint in _childConstraints) {
@@ -39,14 +40,13 @@
 }
 
 - (MASConstraint *)constraint:(MASConstraint __unused *)constraint addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute {
-    id<MASConstraintDelegate> strongDelegate = self.delegate;
-    MASConstraint *newConstraint = [strongDelegate constraint:self addConstraintWithLayoutAttribute:layoutAttribute];
+    MASConstraint *newConstraint = [self.delegate constraint:self addConstraintWithLayoutAttribute:layoutAttribute];
     newConstraint.delegate = self;
     [self.childConstraints addObject:newConstraint];
     return newConstraint;
 }
 
-#pragma mark - NSLayoutConstraint multiplier proxies 
+#pragma mark - NSLayoutConstraint multiplier proxies
 
 - (MASConstraint * (^)(CGFloat))multipliedBy {
     return ^id(CGFloat multiplier) {
@@ -94,19 +94,6 @@
     [self constraint:self addConstraintWithLayoutAttribute:layoutAttribute];
     return self;
 }
-
-#pragma mark - Animator proxy
-
-#if TARGET_OS_MAC && !(TARGET_OS_IPHONE || TARGET_OS_TV)
-
-- (MASConstraint *)animator {
-    for (MASConstraint *constraint in self.childConstraints) {
-        [constraint animator];
-    }
-    return self;
-}
-
-#endif
 
 #pragma mark - debug helpers
 
